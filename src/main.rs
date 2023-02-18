@@ -22,7 +22,7 @@ fn main() -> Result<(), std::io::Error> {
     match &cli.command {
         Some(Commands::InitSystem) => {
             let pm = api::system::find_package_manager()?;
-            println!("{}", pm);
+            println!("{}", pm.as_str());
         }
         None => {
             println!("Please provide args for the CLI");
