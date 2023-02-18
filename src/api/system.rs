@@ -2,10 +2,10 @@ use std::process::Command;
 use std::io::{Error, ErrorKind};
 
 pub fn find_package_manager() -> Result<String, Error> {
-    let package_managers = ["apk", "apt-get", "dnf", "zypper", "yum"];
+    const PACKAGE_MANAGERS: [&str; 5] = ["apk", "apt-get", "dnf", "zypper", "yum"];
 
-    for manager in 0..package_managers.len() {
-        let output = match Command::new(&package_managers[manager])
+    for manager in 0..PACKAGE_MANAGERS.len() {
+        let output = match Command::new(&PACKAGE_MANAGERS[manager])
             .arg("-v")
             .stdout(std::process::Stdio::null())
             .stderr(std::process::Stdio::null())
@@ -16,9 +16,14 @@ pub fn find_package_manager() -> Result<String, Error> {
         };
 
         if output.success() {
-            return Ok(package_managers[manager].to_string());
+            return Ok(PACKAGE_MANAGERS[manager].to_string());
         }
     }
 
     Err(Error::new(ErrorKind::NotFound, "No Package Manager found"))
+}
+
+pub fn install_required_packages() -> Result<(), Error> {
+
+    Ok(())
 }
