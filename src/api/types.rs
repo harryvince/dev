@@ -5,6 +5,7 @@ pub enum PackageManager {
     Dnf,
     Zypper,
     Yum,
+    Homebrew,
 }
 
 impl PackageManager {
@@ -15,16 +16,18 @@ impl PackageManager {
             PackageManager::Dnf => "dnf",
             PackageManager::Zypper => "zypper",
             PackageManager::Yum => "yum",
+            PackageManager::Homebrew => "brew",
         }
     }
 
-    pub fn all() -> [PackageManager; 5] {
+    pub fn all() -> [PackageManager; 6] {
         [
             PackageManager::Apk,
             PackageManager::AptGet,
             PackageManager::Dnf,
             PackageManager::Zypper,
             PackageManager::Yum,
+            PackageManager::Homebrew,
         ]
     }
 }
