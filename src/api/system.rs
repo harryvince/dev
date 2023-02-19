@@ -20,3 +20,4 @@ pub fn find_package_manager() -> Result<PackageManager, Error> {
     }
     Err(Error::new(ErrorKind::NotFound, "No Package Manager found"))
 }
+
