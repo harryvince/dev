@@ -37,7 +37,7 @@ impl PackageManager {
     pub fn install_packages(&self, packages: Vec<&str>) -> Result<(), Error> {
         match self {
             PackageManager::Apk => {
-                let update_command = match Command::new("apk")
+                match Command::new("apk")
                     .arg("update")
                     .stdout(std::process::Stdio::null())
                     .stderr(std::process::Stdio::null())
@@ -50,7 +50,8 @@ impl PackageManager {
             },
             PackageManager::AptGet => {
                 println!("Updating your package manager...");
-                let update_command = match Command::new("apt-get")
+                match Command::new("sudo")
+                    .arg("apt-get")
                     .arg("update")
                     .stdout(std::process::Stdio::null())
                     .stderr(std::process::Stdio::null())
@@ -63,7 +64,7 @@ impl PackageManager {
             },
             PackageManager::Dnf => {
                 println!("Updating your package manager...");
-                let update_command = match Command::new("dnf")
+                match Command::new("dnf")
                     .arg("check-update")
                     .stdout(std::process::Stdio::null())
                     .stderr(std::process::Stdio::null())
@@ -77,7 +78,7 @@ impl PackageManager {
 
             PackageManager::Zypper => {
                 println!("Updating your package manager...");
-                let update_command = match Command::new("zypper")
+                match Command::new("zypper")
                     .arg("refresh")
                     .stdout(std::process::Stdio::null())
                     .stderr(std::process::Stdio::null())
@@ -90,7 +91,7 @@ impl PackageManager {
             },
             PackageManager::Yum => {
                 println!("Updating your package manager...");
-                let update_command = match Command::new("yum")
+                match Command::new("yum")
                     .arg("check-update")
                     .stdout(std::process::Stdio::null())
                     .stderr(std::process::Stdio::null())
