@@ -107,9 +107,7 @@ impl PackageManager {
                 // please add it
                 println!("No need to update, mac user :)");
                 Ok(())
-            }
-
-            _ => todo!(),
+            },
         }
 
     }
