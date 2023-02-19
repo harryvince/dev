@@ -1,3 +1,6 @@
+use std::io::{Error, ErrorKind};
+use std::process::Command;
+
 #[derive(Copy, Clone, Debug)]
 pub enum PackageManager {
     Apk,
@@ -29,6 +32,85 @@ impl PackageManager {
             PackageManager::Yum,
             PackageManager::Homebrew,
         ]
+    }
+
+    pub fn install_packages(&self, packages: Vec<&str>) -> Result<(), Error> {
+        match self {
+            PackageManager::Apk => {
+                let update_command = match Command::new("apk")
+                    .arg("update")
+                    .stdout(std::process::Stdio::null())
+                    .stderr(std::process::Stdio::null())
+                    .status()
+                    {
+                        Ok(_) => println!("Successfully updated package manager."),
+                        Err(_) => return Err(Error::new(ErrorKind::NotFound, "No Package Manager found")),
+                    };
+                return Ok(())
+            },
+            PackageManager::AptGet => {
+                println!("Updating your package manager...");
+                let update_command = match Command::new("apt-get")
+                    .arg("update")
+                    .stdout(std::process::Stdio::null())
+                    .stderr(std::process::Stdio::null())
+                    .status()
+                    {
+                        Ok(_) => println!("Successfully updated package manager."),
+                        Err(_) => return Err(Error::new(ErrorKind::NotFound, "No Package Manager found")),
+                    };
+                return Ok(())
+            },
+            PackageManager::Dnf => {
+                println!("Updating your package manager...");
+                let update_command = match Command::new("dnf")
+                    .arg("check-update")
+                    .stdout(std::process::Stdio::null())
+                    .stderr(std::process::Stdio::null())
+                    .status()
+                    {
+                        Ok(_) => println!("Successfully updated package manager."),
+                        Err(_) => return Err(Error::new(ErrorKind::NotFound, "No Package Manager found")),
+                    };
+                return Ok(())
+            },
+
+            PackageManager::Zypper => {
+                println!("Updating your package manager...");
+                let update_command = match Command::new("zypper")
+                    .arg("refresh")
+                    .stdout(std::process::Stdio::null())
+                    .stderr(std::process::Stdio::null())
+                    .status()
+                    {
+                        Ok(_) => println!("Successfully updated package manager."),
+                        Err(_) => return Err(Error::new(ErrorKind::NotFound, "No Package Manager found")),
+                    };
+                return Ok(())
+            },
+            PackageManager::Yum => {
+                println!("Updating your package manager...");
+                let update_command = match Command::new("yum")
+                    .arg("check-update")
+                    .stdout(std::process::Stdio::null())
+                    .stderr(std::process::Stdio::null())
+                    .status()
+                    {
+                        Ok(_) => println!("Successfully updated package manager."),
+                        Err(_) => return Err(Error::new(ErrorKind::NotFound, "No Package Manager found")),
+                    };
+                return Ok(())
+            },
+            PackageManager::Homebrew => {
+                // I'm not sure if you can do this process in homebrew, if you can
+                // please add it
+                println!("No need to update, mac user :)");
+                Ok(())
+            }
+
+            _ => todo!(),
+        }
+
     }
 }
 

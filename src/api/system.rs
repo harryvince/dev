@@ -9,10 +9,10 @@ pub fn find_package_manager() -> Result<PackageManager, Error> {
             .stdout(std::process::Stdio::null())
             .stderr(std::process::Stdio::null())
             .status()
-        {
-            Ok(output) => output,
-            Err(_) => continue,
-        };
+            {
+                Ok(output) => output,
+                Err(_) => continue,
+            };
 
         if output.success() {
             return Ok(manager.clone());
@@ -21,3 +21,12 @@ pub fn find_package_manager() -> Result<PackageManager, Error> {
     Err(Error::new(ErrorKind::NotFound, "No Package Manager found"))
 }
 
+pub fn gain_sudo() -> Result<(), Error> {
+    match Command::new("sudo")
+        .arg("-v")
+        .status()
+        {
+            Ok(_) => return Ok(()),
+            Err(_) => return Err(Error::new(ErrorKind::NotFound, "No Package Manager found")),
+        };
+}
