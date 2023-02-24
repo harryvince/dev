@@ -1,14 +1,15 @@
 mod api;
 mod args;
 use clap::Parser;
+use args::{Commands, InitSubcommand};
 
 fn main() -> Result<(), std::io::Error> {
     let cli = args::Cli::parse();
 
     match &cli.command {
-        Some(args::Commands::Init(input)) => {
+        Some(Commands::Init(input)) => {
             match &input.command {
-                Some(args::InitSubcommand::Sys) => {
+                Some(InitSubcommand::Sys) => {
                     println!("We're going to ask you for sudo access, this is just needed for some setup");
                     api::system::gain_sudo()?;
                     let pm = api::system::find_package_manager()?;
